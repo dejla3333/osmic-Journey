@@ -1,0 +1,144 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cosmic Journey</title>
+  <style>
+    :root {
+      --bg-image: url(""); /* 👈 Replace with your own photo */
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      color: #fff;
+      text-align: center;
+      background: #000;
+      overflow-x: hidden;
+    }
+
+    .bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: var(--bg-image) center/cover no-repeat;
+      z-index: -2;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); /* dark filter over photo */
+      z-index: -1;
+    }
+
+    .container {
+      position: relative;
+      padding: 50px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    input[type="date"] {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      margin: 10px 0;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      background: linear-gradient(90deg, #ff9800, #ff5722);
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #ff5722, #ff9800);
+      transform: scale(1.05);
+    }
+
+    .results {
+      margin-top: 40px;
+      font-size: 1.4rem;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .results.show {
+      opacity: 1;
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="overlay"></div>
+
+  <div class="container">
+    <h1>Enter your birthdate and see your cosmic journey</h1>
+
+    <input type="date" id="birthdate" />
+    <button onclick="calculateJourney()">Show me my journey </button>
+
+    <div id="results" class="results"></div>
+
+    <footer>
+    
+  </div>
+
+  <script>
+    function calculateJourney() {
+      const birthdate = document.getElementById("birthdate").value;
+      if (!birthdate) {
+        alert("Please select your birthdate.");
+        return;
+      }
+
+      const birth = new Date(birthdate);
+      const now = new Date();
+      const diffMs = now - birth;
+
+      const years = Math.floor(diffMs / (1000 * 60 * 60 * 24 * 365.25));
+      const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const seconds = Math.floor(diffMs / 1000);
+
+      const results = document.getElementById("results");
+      results.innerHTML = `
+        <p>You have orbited the Sun <strong>${years}</strong> times with Earth.</p>
+        <p>That means you’ve lived for about <strong>${days.toLocaleString()}</strong> days.</p>
+        <p>Which equals roughly <strong>${seconds.toLocaleString()}</strong> seconds of life.</p>
+      `;
+      results.classList.add("show");
+    }
+  </script>
+</body>
+</html>
